@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<htm>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title>Todo App</title>
+    <style>
+      body{
+        margin:0px;
+        padding:0px;
+        background-color:#35D289;
+        height: 100%;
+        width: 100%;
+      }
+      .todo{
+        margin: 8px auto;
+        height: 560px;
+        width: 330px;
+        background-color:#FCFBFC;
+        border-style: solid;
+        border-width: 15px;
+        border-color: white;
+        border-radius: 30px;
+      }
+      .data{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 100;
+        font-size: 13px;
+        margin-top: 50px;
+        margin-left: 20px;
+      }
+      #date,#month{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+
+      }
+      .task{
+        margin-top: 20px;
+      }
+      .left-task{
+        float: left;
+        margin-left: 20px;
+      }
+      .right-task{
+        float: right;
+        margin-right: 20px;
+      }
+      .t{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        color:#BFBFBF;
+
+
+      }
+      #created-tasks,#completed-tasks{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        color:black;
+      }
+      .todo-items{
+        position: absolute;
+        margin-top: 100px;
+      }
+      ul{
+        list-style: none;
+        margin-bottom: -20px;
+        
+      }
+      li{
+        display: inline-flex;
+      }
+      .item-check{
+        margin-left: -13px;
+        margin-right: 15px;
+        color:#BFBFBF;
+      }
+      .item-check:hover{
+        color:#35D289;
+      }
+      .item-task{
+        
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        color:black;
+      }
+
+      .item-delete{
+        margin-left: 20px;
+        color:#BFBFBF;
+      }
+      .item-delete:hover{
+        color:red;
+      }
+      .add-item{
+        position:absolute;
+        top: 478px;
+      }
+      .code-by{
+        position:absolute;
+        top:525px;
+
+      }
+      #the-task{
+          padding:10px 60px 10px 10px;
+          border-style: solid;
+          border-width: 1px;
+          outline: none;
+          border-radius: 20px;
+          margin-left: -20px;
+          border-color:#BFBFBF ;
+          font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+      }
+      #the-task::placeholder{
+        color:#BFBFBF;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+      
+        
+      }
+      #the-task:focus-within{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        
+      }
+      #btn{
+        margin-left: 5px;
+        padding:10px 12px 10px 10px;
+        font-size: 20px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #BFBFBF;
+        border-radius: 30px;
+        color:#35D289;
+        outline: none;
+      }
+      #btn:hover{
+        border-color: #35D289;
+      }
+      #code{
+        margin-left: 90px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        color:#BFBFBF;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-div">
+        <div class="todo">
+          <div class="todo-content">
+              <div class="data">
+                <h1><span id="day"></span><span id="date">,  </span><span id="month"></span></h1>
+              </div>
+              <div class="tasks">
+                <div class="left-task">
+                    <p id="created-tasks">0</p>
+                    <p class="t">Created Tasks</p>
+                </div>
+                <div class="right-task">
+                  <p id="completed-tasks">0</p>
+                  <p class="t">Completed Tasks</p>
+
+                </div>
+
+              </div>
+              <div class="todo-items" id="todo-items-list">
+               
+              </div>
+             
+
+              <div class="add-item">
+                <ul>
+                  <li>
+                    <input type="text" placeholder="Write Task..." id="the-task"/>
+                    <button type="button" id="btn"><i class="fa fa-paper-plane">
+                      
+                    </i></button>
+                  </li>
+                </ul>
+
+              </div>
+              <div class="code-by">
+                <p id="code">&copy; Code by Wasim</p>
+
+              </div>
+          </div>
+
+        </div>
+    </div>
+    <script>
+      var totalTasks=[];
+      var id=0;
+      var comp=0;
+      var completeTasks=0;
+      var date=new Date();
+      var day=date.getDay();
+      var month=date.getMonth();
+      var dateOfMonth=date.getDate();
+      var months=['Jan','Feb',"Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      var dayOfTodo=document.getElementById('day');
+      var dateOfTodo=document.getElementById('date');
+      var monthOfTodo=document.getElementById('month');
+      var createdTasks=document.getElementById('created-tasks');
+      var btn=document.getElementById('btn');
+      var completedTasks=document.getElementById('completed-tasks');
+      dayOfTodo.textContent=days[day];
+      dateOfTodo.textContent=", "+dateOfMonth;
+      monthOfTodo.textContent=" "+months[month];
+      createdTasks.textContent=comp;
+      completedTasks.textContent=completeTasks;
+      btn.onclick=function(){
+         var taskText=document.getElementById('the-task');
+         if(taskText.value.trim()!=""){
+        id++;
+        comp++;
+        createdTasks.textContent=comp;
+        var element={
+          task:taskText.value,
+          id:id
+        }
+        store(element);
+        taskText.value="";
+      }
+     }
+      function store(task){
+        
+        totalTasks.push(task);
+        addToDo(task);
+        
+      
+      }
+      function addToDo(task){
+        
+        var i="<h1>Hello World</h1>"
+        var child=document.getElementById('todo-items-list');
+          var el=`<ul class='item' id='list${task.id}'><li class='item-check'  onclick='update(event)' id='${task.id}'><i class='far fa-circle' id='${task.id}circle'></i></li><li class='item-task'><p id='text${task.id}'>${task.task}</p></li><li class='item-delete' ><i class='fa fa-trash' id='${task.id}' onclick="del(event)"></i></li></ul>`;
+          child.innerHTML+=el;
+      }
+      function del(event){
+        
+        var el=document.getElementById('list'+event.target.id);
+        el.style.display="none";
+        comp--;
+        createdTasks.textContent=comp;
+      }
+      function update(event){
+        
+        var checkBox=document.getElementById(event.target.id);
+        var n=parseInt(event.target.id);
+      
+        var text=document.getElementById('text'+n);
+        var col=text.style.color;  
+        if(col.length==0||text.style.color=="black"){
+        text.style.color="#BFBFBF";
+        completeTasks++;
+      
+        completedTasks.textContent=completeTasks;
+        checkBox.className="far fa-check-circle";
+        }
+        else{
+          completeTasks--;
+          completedTasks.textContent=completeTasks;
+          text.style.color="black";
+           checkBox.className="far fa-circle";
+
+        }
+      }
+    </script>
+  </body>
+</htm>
